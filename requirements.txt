@@ -1,4 +1,3 @@
 factordb-pycli
-BigNumber
 gmpy2
 pycryptodome
