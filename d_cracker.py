@@ -1,12 +1,13 @@
 from factordb.factordb import FactorDB
 import gmpy2
 
+
 def factorize_with_factorDB(n):
     f = FactorDB(n)
     f.connect()
     factors = f.get_factor_list()
     if len(factors) == 1:
-        return [-1]
+        return None
     return factors
 
 
@@ -22,7 +23,7 @@ def factorize_with_Pollard(n, B=2000):
             return [d] + factorize_with_Pollard(n // d)
         else:
             i += 1
-    return [-1]
+    return None
 
 
 def factorize_with_fermat(n):
@@ -31,8 +32,12 @@ def factorize_with_fermat(n):
         b1 = a * a - n
         (b, t) = gmpy2.iroot(b1, 2)
         if t:
-            return [a + b, a - b]
-        a += 1
+            break
+        else:
+            a += 1
+    if a - b == 1:
+        return None
+    return [a - b, a + b]
 
 
 def crack_d(n, e):
@@ -40,10 +45,10 @@ def crack_d(n, e):
     factors = [-1]
     for f in flist:
         factors = f(n)
-        if factors != [-1]:
+        if not factors is None:
             break
     else:
-        return -1
+        return None
     phi_n = 1
     for i in factors:
         phi_n *= i - 1
