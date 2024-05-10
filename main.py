@@ -12,7 +12,7 @@ def factorize_with_factorDB(n):
     return factors
 
 
-def factorize_with_Pollard(n, B=50):
+def factorize_with_Pollard(n, B=2000):
     if gmpy2.is_prime(n):
         return [n]
     a = 2
